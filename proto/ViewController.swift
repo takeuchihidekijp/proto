@@ -60,6 +60,7 @@ class ViewController: UIViewController {
         Alamofire.request(.GET, "https://api.gnavi.co.jp/RestSearchAPI/20150630/")
             .responseJSON{response in
                 print(response.result.value) // responseのresultプロパティのvalueプロパティをコンソールに出力
+        }
     }
 
 
