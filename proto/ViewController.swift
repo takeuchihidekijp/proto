@@ -8,6 +8,9 @@
 
 import UIKit
 import GoogleMaps
+import Alamofire // Alamofireをimport
+import SwiftyJSON // SwiftyJSONをimport
+
 
 class ViewController: UIViewController {
     
@@ -42,11 +45,21 @@ class ViewController: UIViewController {
         //viewにMapViewを追加.
         self.view.addSubview(googleMap)
         
+        //試しにぐるなびAPI実行
+        getStores()
+        
     }
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    
+    func getStores() {
+        // ぐるなびAPIへリクエストを送信
+        Alamofire.request(.GET, "https://api.gnavi.co.jp/RestSearchAPI/20150630/")
+            .responseJSON{response in
+                print(response.result.value) // responseのresultプロパティのvalueプロパティをコンソールに出力
     }
 
 
