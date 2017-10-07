@@ -16,6 +16,9 @@ class ViewController: UIViewController {
     
     var googleMap : GMSMapView!
     
+    let parameters: Parameters = ["keyid": "gru_key","format": "json","area": "AREA110"]
+    
+    
     //緯度経度 -> 金沢駅
     let latitude: CLLocationDegrees = 36.5780574
     let longitude: CLLocationDegrees = 136.6486596
@@ -56,11 +59,26 @@ class ViewController: UIViewController {
     }
     
     func getStores() {
-        // ぐるなびAPIへリクエストを送信
-        Alamofire.request(.GET, "https://api.gnavi.co.jp/RestSearchAPI/20150630/")
-            .responseJSON{response in
-                print(response.result.value) // responseのresultプロパティのvalueプロパティをコンソールに出力
+        
+        Alamofire.request("https://api.gnavi.co.jp/RestSearchAPI/20150630/get", parameters: parameters).responseJSON { response in
+            print("Request: \(String(describing: response.request))")   // original url request
+            print("Response: \(String(describing: response.response))") // http url response
+            print("Result: \(response.result)")                         // response serialization result
+            
+            if let json = response.result.value {
+                print("JSON: \(json)") // serialized json response
+            }
+            
+            if let data = response.data, let utf8Text = String(data: data, encoding: .utf8) {
+                print("Data: \(utf8Text)") // original server data as UTF8 string
+            }
         }
+        
+        // ぐるなびAPIへリクエストを送信
+      //  Alamofire.request(.GET, "https://api.gnavi.co.jp/RestSearchAPI/20150630/")
+       //     .responseJSON{response in
+        //        print(response.result.value) // responseのresultプロパティのvalueプロパティをコンソールに出力
+       // }
     }
 
 
