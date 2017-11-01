@@ -15,14 +15,17 @@ import SwiftyJSON // SwiftyJSONをimport
 class ViewController: UIViewController {
     
     var googleMap : GMSMapView!
+ 
     
-    let parameters: Parameters = ["keyid": "gru_key","format": "json","area": "AREA110"]
+    let params: Parameters = ["keyid": gru_key,"format": "json","area": "AREA110"]
+
     
     
     //緯度経度 -> 金沢駅
     let latitude: CLLocationDegrees = 36.5780574
     let longitude: CLLocationDegrees = 136.6486596
 
+    /// <#Description#>
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -59,8 +62,9 @@ class ViewController: UIViewController {
     }
     
     func getStores() {
-        
-        Alamofire.request("https://api.gnavi.co.jp/RestSearchAPI/20150630/get", parameters: parameters).responseJSON { response in
+
+    //            Alamofire.request("https://api.gnavi.co.jp/RestSearchAPI/20150630/get", parameters: parameters).responseJSON { response in
+        Alamofire.request("https://api.gnavi.co.jp/RestSearchAPI/20150630/", method: .get, parameters: params).responseJSON { response in
             print("Request: \(String(describing: response.request))")   // original url request
             print("Response: \(String(describing: response.response))") // http url response
             print("Result: \(response.result)")                         // response serialization result
@@ -83,4 +87,3 @@ class ViewController: UIViewController {
 
 
 }
-
